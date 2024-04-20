@@ -1,0 +1,188 @@
+;;
+;; Type: StateInit
+;; TLB: _ code:^cell data:^cell = StateInit
+;;
+
+((cell, cell)) $StateInit$_not_null(tuple v) inline {
+    throw_if(128, null?(v));
+    var (cell vvv'code, cell vvv'data) = __tact_tuple_destroy_2(v);
+    return (vvv'code, vvv'data);
+}
+
+;;
+;; Type: SendParameters
+;; TLB: _ bounce:bool to:address value:int257 mode:int257 body:Maybe ^cell code:Maybe ^cell data:Maybe ^cell = SendParameters
+;;
+
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline {
+    return (bounce, to, value, mode, body, code, data);
+}
+
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_bounce_mode_body_code_data(slice to, int value, int bounce, int mode, cell body, cell code, cell data) inline {
+    return (bounce, to, value, mode, body, code, data);
+}
+
+;;
+;; Type: Deploy
+;; Header: 0x946a98b6
+;; TLB: deploy#946a98b6 queryId:uint64 = Deploy
+;;
+
+(slice, ((int))) $Deploy$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 2490013878);
+    var v'queryId = sc_0~load_uint(64);
+    return (sc_0, (v'queryId));
+}
+
+;;
+;; Type: DeployOk
+;; Header: 0xaff90f57
+;; TLB: deploy_ok#aff90f57 queryId:uint64 = DeployOk
+;;
+
+builder $DeployOk$_store(builder build_0, (int) v) inline {
+    var (v'queryId) = v;
+    build_0 = store_uint(build_0, 2952335191, 32);
+    build_0 = build_0.store_uint(v'queryId, 64);
+    return build_0;
+}
+
+cell $DeployOk$_store_cell((int) v) inline {
+    return $DeployOk$_store(begin_cell(), v).end_cell();
+}
+
+((int)) $DeployOk$_constructor_queryId(int queryId) inline {
+    return (queryId);
+}
+
+;;
+;; Type: ChangeOwner
+;; Header: 0x819dbe99
+;; TLB: change_owner#819dbe99 queryId:uint64 newOwner:address = ChangeOwner
+;;
+
+(slice, ((int, slice))) $ChangeOwner$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 2174598809);
+    var v'queryId = sc_0~load_uint(64);
+    var v'newOwner = sc_0~__tact_load_address();
+    return (sc_0, (v'queryId, v'newOwner));
+}
+
+;;
+;; Type: ChangeOwnerOk
+;; Header: 0x327b2b4a
+;; TLB: change_owner_ok#327b2b4a queryId:uint64 newOwner:address = ChangeOwnerOk
+;;
+
+builder $ChangeOwnerOk$_store(builder build_0, (int, slice) v) inline {
+    var (v'queryId, v'newOwner) = v;
+    build_0 = store_uint(build_0, 846932810, 32);
+    build_0 = build_0.store_uint(v'queryId, 64);
+    build_0 = __tact_store_address(build_0, v'newOwner);
+    return build_0;
+}
+
+cell $ChangeOwnerOk$_store_cell((int, slice) v) inline {
+    return $ChangeOwnerOk$_store(begin_cell(), v).end_cell();
+}
+
+((int, slice)) $ChangeOwnerOk$_constructor_queryId_newOwner(int queryId, slice newOwner) inline {
+    return (queryId, newOwner);
+}
+
+;;
+;; Type: Transfer
+;; Header: 0x5fcc3d14
+;; TLB: transfer#5fcc3d14 query_id:uint64 new_owner:address response_destination:address custom_payload:Maybe ^cell forward_amount:coins forward_payload:remainder<slice> = Transfer
+;;
+
+builder $Transfer$_store(builder build_0, (int, slice, slice, cell, int, slice) v) inline_ref {
+    var (v'query_id, v'new_owner, v'response_destination, v'custom_payload, v'forward_amount, v'forward_payload) = v;
+    build_0 = store_uint(build_0, 1607220500, 32);
+    build_0 = build_0.store_uint(v'query_id, 64);
+    build_0 = __tact_store_address(build_0, v'new_owner);
+    build_0 = __tact_store_address(build_0, v'response_destination);
+    build_0 = ~ null?(v'custom_payload) ? build_0.store_int(true, 1).store_ref(v'custom_payload) : build_0.store_int(false, 1);
+    build_0 = build_0.store_coins(v'forward_amount);
+    build_0 = build_0.store_slice(v'forward_payload);
+    return build_0;
+}
+
+cell $Transfer$_store_cell((int, slice, slice, cell, int, slice) v) inline {
+    return $Transfer$_store(begin_cell(), v).end_cell();
+}
+
+((int, slice, slice, cell, int, slice)) $Transfer$_constructor_query_id_new_owner_response_destination_custom_payload_forward_amount_forward_payload(int query_id, slice new_owner, slice response_destination, cell custom_payload, int forward_amount, slice forward_payload) inline {
+    return (query_id, new_owner, response_destination, custom_payload, forward_amount, forward_payload);
+}
+
+;;
+;; Type: NFTItem
+;;
+
+builder $NFTItem$init$_store(builder build_0, (slice, int) v) inline {
+    var (v'collection_address, v'index) = v;
+    build_0 = __tact_store_address(build_0, v'collection_address);
+    build_0 = build_0.store_int(v'index, 257);
+    return build_0;
+}
+
+(cell, cell) $NFTItem$_init_child(cell sys', slice $collection_address, int $index) inline_ref {
+    slice sc' = sys'.begin_parse();
+    cell source = sc'~load_dict();
+    cell contracts = new_dict();
+    
+    ;; Contract Code: NFTItem
+    cell mine = __tact_dict_get_code(source, 17494);
+    contracts = __tact_dict_set_code(contracts, 17494, mine);
+    
+    ;; Build cell
+    builder b = begin_cell();
+    b = b.store_ref(begin_cell().store_dict(contracts).end_cell());
+    b = b.store_int(false, 1);
+    b = $NFTItem$init$_store(b, ($collection_address, $index));
+    return (mine, b.end_cell());
+}
+
+;;
+;; Type: NFTCollection
+;;
+
+builder $NFTCollection$_store(builder build_0, (slice) v) inline {
+    var (v'owner) = v;
+    build_0 = __tact_store_address(build_0, v'owner);
+    return build_0;
+}
+
+(slice, ((slice))) $NFTCollection$_load(slice sc_0) inline {
+    var v'owner = sc_0~__tact_load_address();
+    return (sc_0, (v'owner));
+}
+
+(slice, ((slice))) $NFTCollection$init$_load(slice sc_0) inline {
+    var v'owner = sc_0~__tact_load_address();
+    return (sc_0, (v'owner));
+}
+
+(slice) $NFTCollection$_contract_load() impure inline_ref {
+    slice $sc = get_data().begin_parse();
+    __tact_context_sys = $sc~load_ref();
+    int $loaded = $sc~load_int(1);
+    if ($loaded) {
+        return $sc~$NFTCollection$_load();
+    } else {
+        ;; Allow only workchain deployments
+        throw_unless(137, my_address().preload_uint(11) == 1024);
+        (slice owner) = $sc~$NFTCollection$init$_load();
+        $sc.end_parse();
+        return $NFTCollection$_contract_init(owner);
+    }
+}
+
+() $NFTCollection$_contract_store((slice) v) impure inline {
+    builder b = begin_cell();
+    b = b.store_ref(__tact_context_sys);
+    b = b.store_int(true, 1);
+    b = $NFTCollection$_store(b, v);
+    set_data(b.end_cell());
+}
